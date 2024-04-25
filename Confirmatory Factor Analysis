@@ -1,0 +1,21 @@
+library(lavaan)
+library(semPlot)
+data(HolzingerSwineford1939)
+HSmodel = '
+visual =~ x1 + x2 + x3
+textual =~ x4 + x5 + x6
+speeded =~ x7 + x8 + x9
+visual ~ textual
+textual ~ speeded
+visual ~ speeded
+x1 ~~ x2 + x3
+x4 ~~ x6
+x5 ~~ x6
+x7 ~~ x8
+x8 ~~ x9'
+
+HSfit <- cfa(HSmodel, data = HolzingerSwineford1939)
+summary(HSfit, standardized=TRUE)
+
+semPaths(HSfit, whatLabels = "est", style="lisrel",main="SEM Diagram")
+semPaths(HSfit, "std", layout = "tree2")
