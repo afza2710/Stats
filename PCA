@@ -1,0 +1,16 @@
+library(FactoMineR)
+library(factoextra)
+library(ggcorrplot)
+library(ggplot2)
+
+df <- read.csv("C:/Users/Afza/Downloads/Wine.csv")
+colSums(is.na(df))
+normalize <- scale(df)
+pccor <- cor(normalize)
+pcaresult <- princomp(pccor)
+ggcorrplot(pccor, lab = TRUE)
+summary(pcaresult)
+pcaresult$loadings[,1:3]
+fviz_eig(pcaresult, addlabels = TRUE)
+fviz_cos2(pcaresult, choice = "var", axes = 1:3)
+fviz_pca_var(pcaresult, col.var = "cos2", gradient.cols = c("red", "blue"), repel = TRUE)
