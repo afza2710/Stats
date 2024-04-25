@@ -1,0 +1,9 @@
+library(corrplot)
+library(psych)
+df = FactorAnalysis
+c = cor(df)
+corrplot(c)
+model <- fa(c, 4, rotate = "promax")
+fa.diagram(model$loadings)
+data = eigen(c)
+plot(data$values, type = "b")
