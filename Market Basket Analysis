@@ -1,0 +1,23 @@
+library(arules)
+library(arulesViz)
+# Read the CSV file
+data <- read.transactions("C:/Users/Afza/OneDrive/groceries - groceries.csv", format = "basket", sep = ",", rm.duplicates = TRUE)
+# Convert the data frame to a transactions object
+summary(data)
+# Plot item frequency
+itemFrequencyPlot(data,
+                  type = "absolute",
+                  topN = 10,
+                  horiz = TRUE,
+                  main = 'Absolute item frequency')
+# Mine association rules
+rules <- apriori(data, parameter = list(support = 0.001, confidence = 0.8))
+# Sort the rules by lift
+rules <- sort(rules, by = "lift", decreasing = TRUE)
+# Subset the top 10 rules
+top_10_rules <- head(rules, 10)
+inspect(top_10_rules)
+# Plot the top 10 association rules
+plot(top_10_rules, method = "graph")
+# Plot association rules
+plot(rules, method = "graph")
